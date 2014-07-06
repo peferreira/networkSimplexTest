@@ -6,17 +6,20 @@
 CPP_SRCS += \
 ../test/GraphTest.cpp \
 ../test/InputReaderTest.cpp \
-../test/MainTest.cpp 
+../test/MainTest.cpp \
+../test/SimplexForNetworksTest.cpp 
 
 OBJS += \
 ./test/GraphTest.o \
 ./test/InputReaderTest.o \
-./test/MainTest.o 
+./test/MainTest.o \
+./test/SimplexForNetworksTest.o 
 
 CPP_DEPS += \
 ./test/GraphTest.d \
 ./test/InputReaderTest.d \
-./test/MainTest.d 
+./test/MainTest.d \
+./test/SimplexForNetworksTest.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

@@ -9,7 +9,7 @@ protected:
 
 TEST_F(GraphTest, numberOfArcsIsCorret) {
 	Graph G;
-	G.init(4);
+	G.init(4,0,3,10);
 	ASSERT_EQ(0, G.numArc());
 	G.insertArc(false,1, 3,1);
 	G.insertArc(false,2, 0,1);
@@ -20,7 +20,7 @@ TEST_F(GraphTest, numberOfArcsIsCorret) {
 
 TEST_F(GraphTest, removeInsertAndExistArcs) {
 	Graph G;
-	G.init(4);
+	G.init(4,0,3,10);
 	assert(G.existArc(1, 3) == G.getEnd(1));
 	G.insertArc(false,1, 3,1);
 	assert(G.existArc(1, 3) != G.getEnd(1));
@@ -31,7 +31,7 @@ TEST_F(GraphTest, removeInsertAndExistArcs) {
 
 TEST_F(GraphTest, doesNotInsertTwiceSameArc) {
 	Graph G;
-	G.init(4);
+	G.init(4,0,3,10);
 	G.insertArc(false,1, 3,1);
 	G.insertArc(false,1, 3,1);
 	G.insertArc(false,1, 3,1);
@@ -42,7 +42,7 @@ TEST_F(GraphTest, doesNotInsertTwiceSameArc) {
 
 TEST_F(GraphTest, numArcsCorrectAfterRemoveArcThatDoesNotExist) {
 	Graph G;
-	G.init(4);
+	G.init(4,0,3,10);
 	G.insertArc(false, 1, 2, 1);
 	G.removeArc(1, 3);
 	ASSERT_EQ(2, G.numArc());
@@ -60,7 +60,7 @@ TEST_F(GraphTest, testParentAlturaArrays) {
 	V = 8;
 	bool fake = false;
 	int p = 5;
-	G.init(V);
+	G.init(V,0,3,10);
 	G.insertArc(fake, 0, 1, p);
 	G.insertArc(fake, 1, 3, p);
 	G.insertArc(fake, 1, 2, p);

@@ -24,7 +24,7 @@ TEST_F(InputReaderTest, checkInputReadsCorrectNumArcs){
 	//G->printMatrixADJ();
 }
 
-/*TEST_F(InputReaderTest, checkInputReadsCorrectArcs){
+TEST_F(InputReaderTest, checkInputReadsCorrectArcs){
 	Graph *G;
 	G = new Graph();
 	inputReader.loadFile(G);
@@ -36,4 +36,4 @@ TEST_F(InputReaderTest, checkInputReadsCorrectNumArcs){
 	ASSERT_EQ(G->existArc(3,1)->getW(),1);
 	ASSERT_EQ(G->existArc(3,4)->getW(),4);
 }
-*/
+

@@ -4,19 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../test/FirstTest.cpp \
 ../test/GraphTest.cpp \
 ../test/InputReaderTest.cpp \
 ../test/MainTest.cpp 
 
 OBJS += \
-./test/FirstTest.o \
 ./test/GraphTest.o \
 ./test/InputReaderTest.o \
 ./test/MainTest.o 
 
 CPP_DEPS += \
-./test/FirstTest.d \
 ./test/GraphTest.d \
 ./test/InputReaderTest.d \
 ./test/MainTest.d 

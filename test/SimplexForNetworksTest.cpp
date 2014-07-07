@@ -50,7 +50,6 @@ TEST_F(SimplexForNetworksTest, artificialArcsAreCorrect) {
 TEST_F(SimplexForNetworksTest, parentAndAlturaAreCorrect) {
 	Graph *G;
 	Graph T;
-	int i;
 	G = new Graph();
 	int r[] = { 0, 0, 0, 0, 0 };
 	int a[] = { 0, 1, 1, 1, 1 };
@@ -146,11 +145,8 @@ TEST_F(SimplexForNetworksTest, checkIfFeaseableSolution) {
 }*/
 
 TEST_F(SimplexForNetworksTest, limitadorDoCiclo) {
-	int i;
 	int V;
-	int *t;
 	Graph G;
-	i = 0;
 	V = 8;
 	G.init(V,0,3,20);
 	G.insertArc(false, 0, 1, 4);
@@ -169,4 +165,21 @@ TEST_F(SimplexForNetworksTest, limitadorDoCiclo) {
 	/*ASSERT_EQ(4,simplex.findCycle(4,4,G));*/
 }
 
+
+TEST_F(SimplexForNetworksTest, findEnteringArc) {
+		Graph *G;
+		Graph T;
+		G = new Graph();
+		inputReader.loadFile(G);
+		G->graphDFS();
+		int i;
+		for(i = 0; i < G->getNumV(); i++){
+			cout << G->getParent()[i] << ", ";
+		}
+		cout << '\n';
+		simplex.findEnteringArc(*G);
+		//T = simplex.addArtificialArcs(*G);
+
+
+}
 

@@ -6,6 +6,12 @@ class GraphTest: public ::testing::Test {
 protected:
 
 };
+void ASSERT_VECTOR2(int *a, int *b, int n) {
+	int i;
+	for (i = 0; i < n; i++) {
+		ASSERT_EQ(a[i], b[i]);
+	}
+}
 
 TEST_F(GraphTest, numberOfArcsIsCorret) {
 	Graph G;
@@ -76,3 +82,27 @@ TEST_F(GraphTest, testParentAlturaArrays) {
 		ASSERT_EQ(a[i], G.getAltura(i));
 	}
 }
+
+TEST_F(GraphTest, testXArray) {
+	int i;
+	int V;
+	int *t,*h;
+	Graph G;
+	int r[] = { 0, -4, 2, 3, -5, -11, 10, -4 };
+
+	i = 0;
+	V = 8;
+	G.init(V,0,3,10);
+	G.insertArc(false, 0, 1, 4);
+	G.insertArc(true, 1, 3, 3);
+	G.insertArc(true, 1, 2, 2);
+	G.insertArc(false, 2, 7, 4);
+	G.insertArc(false, 0, 4, 5);
+	G.insertArc(true, 4, 6, 10);
+	G.insertArc(false, 4, 5, 11);
+
+	G.graphDFS();
+	t = G.getXArray();
+	ASSERT_VECTOR2(r,t,G.getNumV());
+}
+

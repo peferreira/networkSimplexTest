@@ -58,9 +58,91 @@ TEST_F(SimplexForNetworksTest, parentAndAlturaAreCorrect) {
 	G->graphDFS();
 
 	T = simplex.addArtificialArcs(*G);
-	ASSERT_VECTOR(r,T.getParent(),T.getNumV());
-	ASSERT_VECTOR(a,T.getAlturaArray(),T.getNumV());
+	ASSERT_VECTOR(r, T.getParent(), T.getNumV());
+	ASSERT_VECTOR(a, T.getAlturaArray(), T.getNumV());
 
+}
+
+TEST_F(SimplexForNetworksTest, checkIfFeaseableSolution) {
+	Graph *G;
+	Graph T;
+	list<Arc>::iterator it;
+	int i;
+	int b, bexpected;
+	b = bexpected = 0;
+	G = new Graph();
+
+	inputReader.loadFile(G);
+	G->graphDFS();
+	T = simplex.addArtificialArcs(*G);
+	for (i = 0; i < T.getNumV(); i++) {
+		if (i == T.getInitialVertex()) {
+			bexpected = -1 * T.getProdEscoado();
+		} else if (i == T.getFinishVertex()) {
+			bexpected = T.getProdEscoado();
+		} else
+			bexpected = 0;
+		b=0;
+		for (it = T.getBegin(i); it != T.getEnd(i); it++) {
+			if (!(it->isFake())) {
+				/*cout << "v:" << it->getV() << " w:" << it->getW()
+						<< " Arc Fake:" << it->isFake() << " Arc Artificial:"
+						<< it->isArtificial() << '\n';*/
+				b = b - it->getValue();
+			} else
+				b = b + it->getValue();
+
+		}
+		ASSERT_EQ(b ,bexpected);
+
+	}
+}
+
+TEST_F(SimplexForNetworksTest, findCorrectJoin) {
+	Graph *G;
+	Graph T;
+	G = new Graph();
+	inputReader.loadFile(G);
+	G->graphDFS();
+
+	T = simplex.addArtificialArcs(*G);
+	ASSERT_EQ(1,simplex.findCycle(1,4,*G));
+	ASSERT_EQ(1,simplex.findCycle(4,1,*G));
+	ASSERT_EQ(1,simplex.findCycle(1,1,*G));
+	ASSERT_EQ(4,simplex.findCycle(3,4,*G));
+	ASSERT_EQ(4,simplex.findCycle(4,3,*G));
+
+
+
+	ASSERT_EQ(0,simplex.findCycle(4,3,T));
+	ASSERT_EQ(0,simplex.findCycle(2,1,T));
+	ASSERT_EQ(0,simplex.findCycle(1,3,T));
+}
+
+TEST_F(SimplexForNetworksTest, testFindingJoinTree2) {
+	int i;
+	int V;
+	int *t;
+	Graph G;
+	i = 0;
+	V = 8;
+	bool fake = false;
+	int p = 5;
+	G.init(V,0,3,10);
+	G.insertArc(fake, 0, 1, p);
+	G.insertArc(fake, 1, 3, p);
+	G.insertArc(fake, 1, 2, p);
+	G.insertArc(fake, 2, 7, p);
+	G.insertArc(fake, 0, 4, p);
+	G.insertArc(fake, 4, 6, p);
+	G.insertArc(fake, 4, 5, p);
+
+	G.graphDFS();
+	ASSERT_EQ(1,simplex.findCycle(7,3,G));
+	ASSERT_EQ(4,simplex.findCycle(5,6,G));
+	ASSERT_EQ(0,simplex.findCycle(6,7,G));
+	ASSERT_EQ(0,simplex.findCycle(7,6,G));
+	ASSERT_EQ(4,simplex.findCycle(4,4,G));
 }
 
 

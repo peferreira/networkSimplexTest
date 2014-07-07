@@ -106,3 +106,27 @@ TEST_F(GraphTest, testXArray) {
 	ASSERT_VECTOR2(r,t,G.getNumV());
 }
 
+TEST_F(GraphTest, testYArray) {
+	int i;
+	int V;
+	int *t,*h;
+	Graph G;
+	int r[] = { 0, 4, 2, 1, 5, 16, -5, 6 };
+
+	i = 0;
+	V = 8;
+	G.init(V,0,3,10);
+	G.insertArc(false, 0, 1, 4);
+	G.insertArc(true, 1, 3, 3);
+	G.insertArc(true, 1, 2, 2);
+	G.insertArc(false, 2, 7, 4);
+	G.insertArc(false, 0, 4, 5);
+	G.insertArc(true, 4, 6, 10);
+	G.insertArc(false, 4, 5, 11);
+
+	G.graphDFS();
+	t = G.getYArray();
+	ASSERT_VECTOR2(r,t,G.getNumV());
+}
+
+

@@ -98,7 +98,7 @@ TEST_F(SimplexForNetworksTest, checkIfFeaseableSolution) {
 	}
 }
 
-TEST_F(SimplexForNetworksTest, findCorrectJoin) {
+/*TEST_F(SimplexForNetworksTest, findCorrectJoin) {
 	Graph *G;
 	Graph T;
 	G = new Graph();
@@ -117,9 +117,9 @@ TEST_F(SimplexForNetworksTest, findCorrectJoin) {
 	ASSERT_EQ(0,simplex.findCycle(4,3,T));
 	ASSERT_EQ(0,simplex.findCycle(2,1,T));
 	ASSERT_EQ(0,simplex.findCycle(1,3,T));
-}
+}*/
 
-TEST_F(SimplexForNetworksTest, testFindingJoinTree2) {
+/*TEST_F(SimplexForNetworksTest, testFindingJoinTree2) {
 	int i;
 	int V;
 	int *t;
@@ -143,7 +143,30 @@ TEST_F(SimplexForNetworksTest, testFindingJoinTree2) {
 	ASSERT_EQ(0,simplex.findCycle(6,7,G));
 	ASSERT_EQ(0,simplex.findCycle(7,6,G));
 	ASSERT_EQ(4,simplex.findCycle(4,4,G));
-}
+}*/
 
+TEST_F(SimplexForNetworksTest, limitadorDoCiclo) {
+	int i;
+	int V;
+	int *t;
+	Graph G;
+	i = 0;
+	V = 8;
+	G.init(V,0,3,20);
+	G.insertArc(false, 0, 1, 4);
+	G.insertArc(true, 1, 3, 3);
+	G.insertArc(true, 1, 2, 2);
+	G.insertArc(false, 2, 7, 4);
+	G.insertArc(false, 0, 4, 5);
+	G.insertArc(true, 4, 6, 10);
+	G.insertArc(false, 4, 5, 11);
+
+	G.graphDFS();
+	ASSERT_EQ(2,simplex.findCycle(7,5,G));
+	ASSERT_EQ(20,simplex.findCycle(5,6,G));
+	ASSERT_EQ(4,simplex.findCycle(6,7,G));
+	ASSERT_EQ(2,simplex.findCycle(7,6,G));
+	/*ASSERT_EQ(4,simplex.findCycle(4,4,G));*/
+}
 
 

@@ -94,28 +94,28 @@ TEST_F(GraphTest, testParentAlturaArrays) {
 }
 
 /*TEST_F(GraphTest, testXArray) {
-	int i;
-	int V;
-	int *t, *h;
-	Graph G;
-	int r[] = { 0, -4, 2, 3, -5, -11, 10, -4 };
+ int i;
+ int V;
+ int *t, *h;
+ Graph G;
+ int r[] = { 0, -4, 2, 3, -5, -11, 10, -4 };
 
-	i = 0;
-	V = 8;
-	G.init(V, 0, 3, 10);
-	G.insertArc(false, 0, 1, 4);
-	G.insertArc(true, 1, 3, 3);
-	G.insertArc(true, 1, 2, 2);
-	G.insertArc(false, 2, 7, 4);
-	G.insertArc(false, 0, 4, 5);
-	G.insertArc(true, 4, 6, 10);
-	G.insertArc(false, 4, 5, 11);
+ i = 0;
+ V = 8;
+ G.init(V, 0, 3, 10);
+ G.insertArc(false, 0, 1, 4);
+ G.insertArc(true, 1, 3, 3);
+ G.insertArc(true, 1, 2, 2);
+ G.insertArc(false, 2, 7, 4);
+ G.insertArc(false, 0, 4, 5);
+ G.insertArc(true, 4, 6, 10);
+ G.insertArc(false, 4, 5, 11);
 
-	G.graphDFS();
-	t = G.getXArray();
-	ASSERT_VECTOR2(r, t, G.getNumV());
-}
-*/
+ G.graphDFS();
+ t = G.getXArray();
+ ASSERT_VECTOR2(r, t, G.getNumV());
+ }
+ */
 TEST_F(GraphTest, testYArray) {
 	int i;
 	int V;
@@ -149,25 +149,104 @@ TEST_F(GraphTest, testaMontaEstruturaArvore) {
 
 	Graph T = G->montaEstruturaArvore();
 	Graph H = G->clone();
-	T.graphDFS();
 	T = simplex.Initialization(T);
-	Arc c = simplex.findEnteringArc(T,H);
+	T.graphDFS();
 
-	simplex.findCycle(1, 2,T);
-	/*T.insertArc(false,1,4,0);
-	T.graphDFS();*/
+	Arc c = simplex.findEnteringArc(T, H);
+	assert(c.getV() >= 0);
 
 	T.printMatrixADJ();
 
-
 	t = T.getXArray();
 	printVector2(t, T.getNumV(), "X");
+	t = T.getParent();
+	printVector2(t, T.getNumV(), "Parent");
 	t = T.getYArray();
 	printVector2(t, T.getNumV(), "Y");
 	t = T.getPre();
 	printVector2(t, T.getNumV(), "PRE");
+	t = T.getDArray();
+	printVector2(t, T.getNumV(), "Direcao");
+	simplex.findCycle(c.getV(), c.getW(), T);
+	/*T.graphDFS();*/
 
+	T.printMatrixADJ();
 
+	t = T.getXArray();
+	printVector2(t, T.getNumV(), "X");
+	t = T.getParent();
+	printVector2(t, T.getNumV(), "Parent");
+	t = T.getYArray();
+	printVector2(t, T.getNumV(), "Y");
+	t = T.getPre();
+	printVector2(t, T.getNumV(), "PRE");
+	t = T.getDArray();
+	printVector2(t, T.getNumV(), "Direcao");
+	T.graphDFS();
+
+	c = simplex.findEnteringArc(T, H);
+	assert(c.getV() >= 0);
+	simplex.findCycle(c.getV(), c.getW(), T);
+
+	t = T.getXArray();
+	printVector2(t, T.getNumV(), "X");
+	t = T.getParent();
+	printVector2(t, T.getNumV(), "Parent");
+	t = T.getYArray();
+	printVector2(t, T.getNumV(), "Y");
+	t = T.getPre();
+	printVector2(t, T.getNumV(), "PRE");
+	t = T.getDArray();
+	printVector2(t, T.getNumV(), "Direcao");
+	T.graphDFS();
+	T.printMatrixADJ();
+	t = T.getXArray();
+	printVector2(t, T.getNumV(), "X");
+	t = T.getParent();
+	printVector2(t, T.getNumV(), "Parent");
+	t = T.getYArray();
+	printVector2(t, T.getNumV(), "Y");
+	t = T.getPre();
+	printVector2(t, T.getNumV(), "PRE");
+	t = T.getDArray();
+	printVector2(t, T.getNumV(), "Direcao");
+	c = simplex.findEnteringArc(T, H);
+	assert(c.getV() == -1);
 }
 
+void printAuxArrays(Graph T) {
+	int *t = T.getXArray();
+	printVector2(t, T.getNumV(), "X");
+	t = T.getParent();
+	printVector2(t, T.getNumV(), "Parent");
+	t = T.getYArray();
+	printVector2(t, T.getNumV(), "Y");
+	t = T.getPre();
+	printVector2(t, T.getNumV(), "PRE");
+	t = T.getDArray();
+	printVector2(t, T.getNumV(), "Direcao");
+	T.printMatrixADJ();
+}
+TEST_F(GraphTest, testInitSimplex) {
+	int i;
+	int V;
+	int *t, *h;
+	Graph *G;
+	G = new Graph();
+	input.loadFile(G);
 
+	Graph T = G->montaEstruturaArvore();
+	Graph H = G->clone();
+	T = simplex.Initialization(T);
+	T.graphDFS();
+	Arc c = simplex.findEnteringArc(T, H);
+	while (c.getV() >= 0) {
+		simplex.findCycle(c.getV(), c.getW(), T);
+		printAuxArrays(T);
+		T.graphDFS();
+		c = simplex.findEnteringArc(T, H);
+
+	}
+	printAuxArrays(T);
+
+}

@@ -146,25 +146,25 @@ TEST_F(SimplexForNetworksTest, checkIfFeaseableSolution) {
  }*/
 
 /*TEST_F(SimplexForNetworksTest, limitadorDoCiclo) {
-	int V;
-	Graph G;
-	V = 8;
-	G.init(V, 0, 3, 20);
-	G.insertArc(false, 0, 1, 4);
-	G.insertArc(true, 1, 3, 3);
-	G.insertArc(true, 1, 2, 2);
-	G.insertArc(false, 2, 7, 4);
-	G.insertArc(false, 0, 4, 5);
-	G.insertArc(true, 4, 6, 10);
-	G.insertArc(false, 4, 5, 11);
+ int V;
+ Graph G;
+ V = 8;
+ G.init(V, 0, 3, 20);
+ G.insertArc(false, 0, 1, 4);
+ G.insertArc(true, 1, 3, 3);
+ G.insertArc(true, 1, 2, 2);
+ G.insertArc(false, 2, 7, 4);
+ G.insertArc(false, 0, 4, 5);
+ G.insertArc(true, 4, 6, 10);
+ G.insertArc(false, 4, 5, 11);
 
-	G.graphDFS();
-	ASSERT_EQ(2, simplex.findCycle(7, 5, G));
-	/*ASSERT_EQ(20,simplex.findCycle(5,6,G));*/
-	/*ASSERT_EQ(4,simplex.findCycle(6,7,G));*/
-	/*ASSERT_EQ(2,simplex.findCycle(7,6,G));*/
-	/*ASSERT_EQ(4,simplex.findCycle(4,4,G));
-}*/
+ G.graphDFS();
+ ASSERT_EQ(2, simplex.findCycle(7, 5, G));
+ /*ASSERT_EQ(20,simplex.findCycle(5,6,G));*/
+/*ASSERT_EQ(4,simplex.findCycle(6,7,G));*/
+/*ASSERT_EQ(2,simplex.findCycle(7,6,G));*/
+/*ASSERT_EQ(4,simplex.findCycle(4,4,G));
+ }*/
 
 TEST_F(SimplexForNetworksTest, findEnteringArc) {
 	Graph *G;
@@ -177,7 +177,7 @@ TEST_F(SimplexForNetworksTest, findEnteringArc) {
 		cout << G->getParent()[i] << ", ";
 	}
 	cout << '\n';
-	simplex.findEnteringArc(*G,*G);
+	simplex.findEnteringArc(*G, *G);
 	//T = simplex.addArtificialArcs(*G);
 
 }
@@ -196,7 +196,7 @@ TEST_F(SimplexForNetworksTest, findEnteringArcAndCheckCycle) {
 	 }
 	 cout << '\n';*/
 	xArray = G->getXArray();
-	Arc c = simplex.findEnteringArc(*G,*G);
+	Arc c = simplex.findEnteringArc(*G, *G);
 	//cout << "arco entrando" << " v:" <<c.getV() << " w:" <<c.getW() << '\n';
 	simplex.findCycle(c.getV(), c.getW(), *G);
 	//T = simplex.addArtificialArcs(*G);
@@ -217,7 +217,7 @@ TEST_F(SimplexForNetworksTest, teste2) {
 	 }
 	 cout << '\n';*/
 	xArray = G->getXArray();
-	Arc c = simplex.findEnteringArc(*G,*G);
+	Arc c = simplex.findEnteringArc(*G, *G);
 	//cout << "arco entrando" << " v:" <<c.getV() << " w:" <<c.getW() << '\n';
 	simplex.findCycle(c.getV(), c.getW(), *G);
 	//T = simplex.addArtificialArcs(*G);
@@ -245,8 +245,8 @@ TEST_F(SimplexForNetworksTest, initializationHasCorrectVectors) {
 	int *t, *s, *r, *v;
 	int i;
 	int size = T.getNumV();
-/*
-	t = T.getParent();
+	/*
+	 t = T.getParent();
 	 printVector(t,size,"parent");
 	 s = T.getXArray();
 	 printVector(s,size, "X");
@@ -268,7 +268,7 @@ TEST_F(SimplexForNetworksTest, testInitialization) {
 	G->graphDFS();
 
 	T = simplex.addArtificialArcs(*G);
-	Arc c = simplex.findEnteringArc(T,T);
+	Arc c = simplex.findEnteringArc(T, T);
 	simplex.findCycle(1, 4, T);
 
 	int *t, *s, *r, *v;
@@ -284,7 +284,6 @@ TEST_F(SimplexForNetworksTest, testInitialization) {
 	printVector(r, size, "Y");
 	/*v = T.getAlturaArray();
 
-	printVector(v, size, "altura");*/
-
+	 printVector(v, size, "altura");*/
 
 }

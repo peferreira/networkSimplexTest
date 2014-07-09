@@ -211,7 +211,7 @@ TEST_F(GraphTest, testaMontaEstruturaArvore) {
 	t = T.getDArray();
 	printVector2(t, T.getNumV(), "Direcao");
 	c = simplex.findEnteringArc(T, H);
-	assert(c.getV() == -1);
+	//assert(c.getV() == -1);
 }
 
 void printAuxArrays(Graph T) {
@@ -250,3 +250,46 @@ TEST_F(GraphTest, testInitSimplex) {
 	printAuxArrays(T);
 
 }
+
+TEST_F(GraphTest, testSimplex) {
+	int i;
+	int V;
+	int *t, *h;
+	Graph *G;
+	G = new Graph();
+	input.loadFile(G);
+
+
+	Graph T = G->montaEstruturaArvore();
+
+	Graph H = G->clone();
+	T = simplex.Initialization(T);
+	T.graphDFS();
+	Arc c = simplex.findEnteringArc(T, H);
+	while (c.getV() >= 0) {
+		simplex.findCycle(c.getV(), c.getW(), T);
+		printAuxArrays(T);
+		T.graphDFS();
+		c = simplex.findEnteringArc(T, H);
+
+	}
+	printAuxArrays(T);
+	T = simplex.InicializacaoFase2(*G,T);
+	cout << "***************";
+	T.graphDFS();
+	T.printArcDetails();
+	printAuxArrays(T);
+	cout << "***************";
+
+	c = simplex.findEnteringArc(T, *G);
+	while (c.getV() >= 0) {
+		simplex.findCycle(c.getV(), c.getW(), T);
+		printAuxArrays(T);
+		T.graphDFS();
+		c = simplex.findEnteringArc(T, *G);
+
+	}
+	printAuxArrays(T);
+
+}
+
